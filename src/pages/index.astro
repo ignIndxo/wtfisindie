@@ -1,15 +1,17 @@
 ---
-import "../styles/global.css";
+import Layout from "../layouts/Layout.astro";
 ---
 
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>WTF is Indie?</title>
-  </head>
-  <body>
-    <h1 class="text-4xl font-bold">WTF is Indie?</h1>
-  </body>
-</html>
+<Layout title="WTF is Indie? | Coming Soon" description="WTF is Indie? Coming soon. Get tickets on Fatsoma.">
+  <main class="flex min-h-full flex-col items-center justify-center gap-6 p-4 text-center">
+    <h1 class="text-[clamp(2.5rem,12vw,8rem)] leading-[1.1] font-normal">COMING SOON...</h1>
+    <a
+      class="text-[clamp(1.5rem,5vw,2.5rem)] underline underline-offset-[0.2em] hover:opacity-70 focus-visible:opacity-70"
+      href="https://www.fatsoma.com/p/wtfisindie"
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      get tickets here
+    </a>
+  </main>
+</Layout>
