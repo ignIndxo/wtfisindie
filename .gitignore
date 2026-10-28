@@ -10,3 +10,6 @@ Thumbs.db
 
 # Figma design reference (not part of the site)
 Y2K Zine Inspired Website*/
+
+# Astro
+.astro/
