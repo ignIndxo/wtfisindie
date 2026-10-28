@@ -1,0 +1,98 @@
+---
+import { site } from "../config/site";
+import Logo from "./Logo.astro";
+
+const year = new Date().getFullYear();
+---
+
+<footer id="contact">
+  <div class="footer-top">
+    <p>WANNA TALK?</p>
+    <a href={`mailto:${site.email}`}>{site.email} ↗</a>
+  </div>
+  <div class="footer-bottom">
+    <Logo />
+    <div>
+      <a href={site.instagramUrl} target="_blank" rel="noopener noreferrer">INSTAGRAM ↗</a>
+      <a href="#zine">THE ZINE ↗</a>
+      <a href={site.fatsomaUrl} target="_blank" rel="noopener noreferrer">TICKETS ↗</a>
+    </div>
+    <p>
+      MADE WITH CHEAP INK<br />
+      AND EXPENSIVE TASTE © {year}
+    </p>
+  </div>
+</footer>
+
+<style>
+  footer {
+    background: var(--black);
+    color: #f8f4eb;
+  }
+
+  .footer-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 4rem 6vw;
+    border-bottom: 1px solid color-mix(in srgb, #f8f4eb 30%, transparent);
+  }
+
+  .footer-top p {
+    margin: 0;
+    font: 0.68rem var(--font-mono);
+  }
+
+  .footer-top a {
+    font-family: var(--font-heading);
+    font-size: clamp(1.3rem, 4vw, 4rem);
+    letter-spacing: -0.06em;
+    text-transform: uppercase;
+    overflow-wrap: anywhere;
+  }
+
+  .footer-bottom {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: end;
+    padding: 3rem 6vw 2.5rem;
+  }
+
+  .footer-bottom div {
+    display: flex;
+    gap: 1.5rem;
+  }
+
+  .footer-bottom div a,
+  .footer-bottom > p {
+    font: 0.58rem/1.7 var(--font-mono);
+  }
+
+  .footer-bottom > p {
+    justify-self: end;
+    margin: 0;
+    text-align: right;
+  }
+
+  @media (max-width: 600px) {
+    .footer-top {
+      align-items: flex-start;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .footer-bottom {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+
+    .footer-bottom div {
+      flex-wrap: wrap;
+    }
+
+    .footer-bottom > p {
+      justify-self: start;
+      text-align: left;
+    }
+  }
+</style>
