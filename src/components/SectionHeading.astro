@@ -1,0 +1,62 @@
+---
+interface Props {
+  eyebrow: string;
+}
+
+const { eyebrow } = Astro.props;
+const hasNote = Astro.slots.has("note");
+---
+
+<div class="section-heading">
+  <div>
+    <p class="eyebrow">{eyebrow}</p>
+    <h2 class="display-heading"><slot /></h2>
+  </div>
+  {
+    hasNote && (
+      <p class="margin-note">
+        <slot name="note" />
+      </p>
+    )
+  }
+</div>
+
+<style>
+  .section-heading {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    margin-bottom: 4rem;
+  }
+
+  h2 {
+    margin: 0;
+    font-size: clamp(3.4rem, 7.5vw, 7.6rem);
+    line-height: 0.78;
+  }
+
+  /* An <em> in the heading becomes the hollow pink-outlined word. */
+  h2 :global(em) {
+    font-style: normal;
+    color: transparent;
+    -webkit-text-stroke: 2px var(--pink);
+  }
+
+  .margin-note {
+    max-width: 220px;
+    padding: 14px;
+    border: 1px solid var(--ink);
+    background: var(--butter);
+    color: var(--black);
+    font: 0.67rem/1.7 var(--font-mono);
+    transform: rotate(2deg);
+  }
+
+  @media (max-width: 600px) {
+    .section-heading {
+      align-items: flex-start;
+      flex-direction: column;
+      gap: 2rem;
+    }
+  }
+</style>
