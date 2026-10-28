@@ -17,7 +17,7 @@ introduced later, build output goes to `dist/` (already git-ignored).
 
 ## Font
 
-The page uses **NIGHTJUMP** (italic), self-hosted from `assets/fonts/NIGHTJUMP.ttf`.
+The page uses **NIGHTJUMP** (italic), self-hosted from `assets/fonts/NIGHTJUMP.woff2` (TTF as fallback).
 
 ## Local preview
 

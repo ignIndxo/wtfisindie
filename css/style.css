@@ -9,7 +9,7 @@
 :root {
   --bg: #000;
   --fg: #fff;
-  --font-display: "NIGHTJUMP", "Brush Script MT", cursive;
+  --font-display: "NIGHTJUMP";
 }
 
 *, *::before, *::after { box-sizing: border-box; }
