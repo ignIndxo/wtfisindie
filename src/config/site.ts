@@ -12,3 +12,9 @@ export const nav = [
   { label: "PHOTOS", href: "#gallery" },
   { label: "ABOUT", href: "#about" },
 ] as const;
+
+export const tickerItems = [
+  "EVERY THURSDAY AT JESTERS",
+  "LOUD MUSIC / NICE PEOPLE",
+  "SOUTHAMPTON AFTER DARK",
+] as const;

@@ -1,0 +1,67 @@
+---
+interface Props {
+  items: readonly string[];
+}
+
+const { items } = Astro.props;
+---
+
+<div class="ticker" role="region" aria-label="Latest news">
+  <div class="track">
+    {
+      [0, 1].map((copy) => (
+        <div class="group" aria-hidden={copy === 1 ? "true" : undefined}>
+          {items.map((item) => (
+            <>
+              <span>{item}</span>
+              <i aria-hidden="true">+</i>
+            </>
+          ))}
+        </div>
+      ))
+    }
+  </div>
+</div>
+
+<style>
+  .ticker {
+    overflow: hidden;
+    border-bottom: 1px solid var(--rule);
+    background: var(--pink);
+    color: #f8f4eb;
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    white-space: nowrap;
+  }
+
+  .track {
+    display: flex;
+    width: max-content;
+    padding: 9px 0;
+    animation: ticker 24s linear infinite;
+  }
+
+  /* Each copy carries its own trailing gap so the two halves are equal
+     and the -50% loop is seamless. */
+  .group {
+    display: flex;
+    gap: 2rem;
+    padding-right: 2rem;
+  }
+
+  i {
+    font-style: normal;
+  }
+
+  @keyframes ticker {
+    to {
+      transform: translateX(-50%);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .track {
+      animation: none;
+    }
+  }
+</style>
