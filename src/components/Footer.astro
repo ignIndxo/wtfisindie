@@ -1,54 +1,46 @@
 ---
 import { site } from "../config/site";
 import Logo from "./Logo.astro";
-
-const year = new Date().getFullYear();
 ---
 
 <footer id="contact">
-  <div class="footer-top">
-    <p>WANNA TALK?</p>
-    <a href={`mailto:${site.email}`}>{site.email} ↗</a>
-  </div>
   <div class="footer-bottom">
     <Logo />
     <div>
       <a href={site.instagramUrl} target="_blank" rel="noopener noreferrer">INSTAGRAM ↗</a>
       <a href="#zine">THE ZINE ↗</a>
       <a href={site.fatsomaUrl} target="_blank" rel="noopener noreferrer">TICKETS ↗</a>
+      <a
+        class="contact-link"
+        href={site.instagramUrl}
+        data-contact={site.contactEncoded}
+        target="_blank"
+        rel="noopener noreferrer">CONTACT ↗</a
+      >
     </div>
-    <p>
-      MADE WITH CHEAP INK<br />
-      AND EXPENSIVE TASTE © {year}
-    </p>
   </div>
 </footer>
+
+<script>
+  // The address is only assembled on interaction, so scrapers reading the HTML
+  // never see it. Without JavaScript the link falls back to Instagram.
+  const link = document.querySelector<HTMLAnchorElement>(".contact-link");
+  const arm = () => {
+    const encoded = link?.dataset.contact;
+    if (!link || !encoded) return;
+    link.href = `mailto:${atob(encoded)}`;
+    link.removeAttribute("target");
+    link.removeAttribute("rel");
+  };
+  for (const type of ["pointerenter", "focus", "touchstart"]) {
+    link?.addEventListener(type, arm, { once: true, passive: true });
+  }
+</script>
 
 <style>
   footer {
     background: var(--black);
     color: #f8f4eb;
-  }
-
-  .footer-top {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 4rem 6vw;
-    border-bottom: 1px solid color-mix(in srgb, #f8f4eb 30%, transparent);
-  }
-
-  .footer-top p {
-    margin: 0;
-    font: 0.68rem var(--font-mono);
-  }
-
-  .footer-top a {
-    font-family: var(--font-heading);
-    font-size: clamp(1.3rem, 4vw, 4rem);
-    letter-spacing: -0.06em;
-    text-transform: uppercase;
-    overflow-wrap: anywhere;
   }
 
   .footer-bottom {
@@ -63,24 +55,11 @@ const year = new Date().getFullYear();
     gap: 1.5rem;
   }
 
-  .footer-bottom div a,
-  .footer-bottom > p {
+  .footer-bottom div a {
     font: 0.58rem/1.7 var(--font-mono);
   }
 
-  .footer-bottom > p {
-    justify-self: end;
-    margin: 0;
-    text-align: right;
-  }
-
   @media (max-width: 600px) {
-    .footer-top {
-      align-items: flex-start;
-      flex-direction: column;
-      gap: 1.5rem;
-    }
-
     .footer-bottom {
       grid-template-columns: 1fr;
       gap: 2rem;
@@ -88,11 +67,6 @@ const year = new Date().getFullYear();
 
     .footer-bottom div {
       flex-wrap: wrap;
-    }
-
-    .footer-bottom > p {
-      justify-self: start;
-      text-align: left;
     }
   }
 </style>
