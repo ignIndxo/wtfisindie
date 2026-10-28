@@ -1,0 +1,149 @@
+---
+import photo from "../assets/placeholders/photo.svg";
+---
+
+<div class="hero-visual">
+  <p class="cutout-label cutout-label-top">NEW NOISE / OLD HABITS</p>
+  <div class="photo-frame hero-photo">
+    <img src={photo.src} alt="Placeholder for a photo from a WTF is Indie? night" />
+    <span class="photo-note">WTF, THURSDAY NIGHT</span>
+  </div>
+  <div class="disc" aria-hidden="true">
+    <div>WTF</div>
+  </div>
+  <p class="tape">DANCE FIRST / ASK LATER</p>
+  <p class="cutout-label cutout-label-side">NO ALGORITHM</p>
+</div>
+
+<style>
+  .hero-visual {
+    position: relative;
+    width: min(88%, 560px);
+    margin: 0 auto;
+  }
+
+  .photo-frame {
+    padding: 14px 14px 40px;
+    border: 1px solid var(--ink);
+    background: var(--white);
+    color: var(--black);
+    box-shadow: 8px 9px 0 var(--pink);
+  }
+
+  .hero-photo {
+    transform: rotate(3deg);
+  }
+
+  .hero-photo img {
+    height: min(54vh, 560px);
+    object-fit: cover;
+    filter: var(--photo-filter);
+  }
+
+  .photo-note {
+    display: block;
+    padding-top: 12px;
+    font: 0.65rem var(--font-mono);
+  }
+
+  .disc {
+    position: absolute;
+    right: -9%;
+    bottom: -11%;
+    display: grid;
+    width: clamp(100px, 13vw, 160px);
+    aspect-ratio: 1;
+    place-items: center;
+    border: 1px solid var(--ink);
+    border-radius: 50%;
+    background:
+      radial-gradient(circle, var(--paper) 0 9%, var(--ink) 10% 12%, transparent 13%),
+      repeating-radial-gradient(circle, var(--black) 0 5px, #28282d 6px, var(--black) 8px);
+    box-shadow: 4px 5px 0 var(--pink);
+    animation: spin 16s linear infinite;
+  }
+
+  .disc div {
+    display: grid;
+    width: 38%;
+    aspect-ratio: 1;
+    place-items: center;
+    border-radius: 50%;
+    background: var(--pink);
+    color: #f8f4eb;
+    font: 0.65rem var(--font-mono);
+  }
+
+  @keyframes spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  .tape {
+    position: absolute;
+    z-index: 2;
+    top: 7%;
+    left: -12%;
+    margin: 0;
+    padding: 8px 18px;
+    background: var(--butter);
+    color: var(--black);
+    font: 500 0.65rem var(--font-mono);
+    box-shadow: 2px 2px 0 color-mix(in srgb, var(--ink) 30%, transparent);
+    transform: rotate(-8deg);
+  }
+
+  .cutout-label {
+    position: absolute;
+    z-index: 3;
+    margin: 0;
+    padding: 0.32rem 0.5rem;
+    background: var(--ink);
+    color: var(--paper);
+    font: 500 0.56rem var(--font-mono);
+    letter-spacing: 0.06em;
+  }
+
+  .cutout-label-top {
+    top: -1.2rem;
+    right: 8%;
+    transform: rotate(3deg);
+  }
+
+  .cutout-label-side {
+    right: -3.2rem;
+    bottom: 24%;
+    transform: rotate(88deg);
+  }
+
+  @media (max-width: 900px) {
+    .hero-visual {
+      width: min(75%, 500px);
+    }
+
+    .hero-photo img {
+      height: min(65vw, 530px);
+    }
+  }
+
+  @media (max-width: 600px) {
+    .hero-visual {
+      width: 86%;
+    }
+
+    .disc {
+      right: -7%;
+    }
+
+    .cutout-label-side {
+      right: -2.7rem;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .disc {
+      animation: none;
+    }
+  }
+</style>
