@@ -1,0 +1,82 @@
+---
+interface Props {
+  items: readonly string[];
+}
+
+const { items } = Astro.props;
+
+// Each half repeats the items enough times to be wider than any realistic
+// screen (about 700px per copy, so 12 copies covers 8K displays). The track
+// scrolls by exactly one half, so the loop is seamless and never shows a gap.
+const COPIES_PER_HALF = 12;
+const halves = [0, 1];
+const copies = Array.from({ length: COPIES_PER_HALF }, (_, i) => i);
+---
+
+<div class="ticker" role="region" aria-label="Latest news">
+  <div class="track" style={`--copies: ${COPIES_PER_HALF}`}>
+    {
+      halves.map((half) => (
+        <div class="half">
+          {copies.map((copy) => (
+            <div class="group" aria-hidden={half === 0 && copy === 0 ? undefined : "true"}>
+              {items.map((item) => (
+                <>
+                  <span>{item}</span>
+                  <i aria-hidden="true">+</i>
+                </>
+              ))}
+            </div>
+          ))}
+        </div>
+      ))
+    }
+  </div>
+</div>
+
+<style>
+  .ticker {
+    overflow: hidden;
+    border-bottom: 1px solid var(--rule);
+    background: var(--pink);
+    color: #f8f4eb;
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    white-space: nowrap;
+  }
+
+  .track {
+    display: flex;
+    width: max-content;
+    padding: 9px 0;
+    /* Constant speed however many copies are in each half. */
+    animation: ticker calc(var(--copies) * 24s) linear infinite;
+  }
+
+  .half {
+    display: flex;
+  }
+
+  /* Each copy carries its own trailing gap so the two halves are equal. */
+  .group {
+    display: flex;
+    gap: 2rem;
+    padding-right: 2rem;
+  }
+
+  i {
+    font-style: normal;
+  }
+
+  @keyframes ticker {
+    to {
+      transform: translateX(-50%);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .track {
+      animation: none;
+    }
+  }
+</style>

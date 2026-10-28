@@ -1,0 +1,234 @@
+---
+import { nav, site } from "../config/site";
+import Logo from "./Logo.astro";
+---
+
+<header class="site-header">
+  <a href="#top" aria-label={`${site.name} home`}><Logo /></a>
+  <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav">
+    MENU
+  </button>
+  <nav id="site-nav">
+    {nav.map((item) => <a href={item.href}>{item.label}</a>)}
+  </nav>
+  <div class="header-actions">
+    <button class="theme-toggle" type="button" aria-label="Switch to light mode" aria-pressed="false">
+      <span class="to-light" aria-hidden="true">LIGHT</span>
+      <span class="to-dark" aria-hidden="true">DARK</span>
+      <i aria-hidden="true"></i>
+    </button>
+    <a class="header-ticket" href={site.fatsomaUrl} target="_blank" rel="noopener noreferrer">
+      GET IN →
+    </a>
+  </div>
+</header>
+
+<script>
+  const header = document.querySelector<HTMLElement>(".site-header");
+  const toggle = header?.querySelector<HTMLButtonElement>(".menu-toggle");
+  const nav = header?.querySelector<HTMLElement>("nav");
+
+  const setOpen = (open: boolean) => {
+    nav?.classList.toggle("nav-open", open);
+    toggle?.setAttribute("aria-expanded", String(open));
+    if (toggle) toggle.textContent = open ? "CLOSE" : "MENU";
+  };
+
+  const themeToggle = header?.querySelector<HTMLButtonElement>(".theme-toggle");
+  const root = document.documentElement;
+
+  const syncTheme = () => {
+    const light = root.dataset.theme === "light";
+    themeToggle?.setAttribute("aria-pressed", String(light));
+    themeToggle?.setAttribute("aria-label", `Switch to ${light ? "dark" : "light"} mode`);
+  };
+
+  themeToggle?.addEventListener("click", () => {
+    const next = root.dataset.theme === "light" ? "dark" : "light";
+    root.dataset.theme = next;
+    try {
+      localStorage.setItem("wtf-theme", next);
+    } catch {}
+    syncTheme();
+  });
+  syncTheme();
+
+  toggle?.addEventListener("click", () => setOpen(!nav?.classList.contains("nav-open")));
+  nav?.addEventListener("click", (event) => {
+    if ((event.target as HTMLElement).closest("a")) setOpen(false);
+  });
+</script>
+
+<style>
+  .site-header {
+    position: sticky;
+    z-index: 10;
+    top: 0;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    min-height: 76px;
+    padding: 0 4vw;
+    border-bottom: 1px solid var(--rule);
+    background: color-mix(in srgb, var(--paper) 96%, transparent);
+    backdrop-filter: blur(8px);
+  }
+
+  nav {
+    display: flex;
+    gap: clamp(1.1rem, 2.8vw, 3rem);
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    font-weight: 500;
+  }
+
+  nav a {
+    position: relative;
+  }
+
+  nav a::after {
+    position: absolute;
+    right: 0;
+    bottom: -4px;
+    left: 0;
+    height: 2px;
+    content: "";
+    background: currentColor;
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 180ms ease;
+  }
+
+  nav a:hover::after {
+    transform: scaleX(1);
+    transform-origin: left;
+  }
+
+  .header-actions {
+    display: flex;
+    align-items: center;
+    justify-self: end;
+    gap: 0.75rem;
+  }
+
+  .header-ticket {
+    padding: 10px 16px;
+    border: 1px solid var(--ink);
+    background: var(--pink);
+    box-shadow: 3px 3px 0 color-mix(in srgb, var(--ink) 55%, transparent);
+    color: #f8f4eb;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    font-weight: 500;
+    transform: rotate(-1deg);
+  }
+
+  .theme-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+    cursor: pointer;
+    border: 0;
+    padding: 0.4rem;
+    background: transparent;
+    font: 500 0.6rem var(--font-mono);
+    letter-spacing: 0.08em;
+  }
+
+  .theme-toggle i {
+    position: relative;
+    display: block;
+    width: 30px;
+    height: 13px;
+    border: 1px solid var(--ink);
+    background: var(--surface);
+  }
+
+  .theme-toggle i::after {
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 7px;
+    height: 7px;
+    content: "";
+    background: var(--pink);
+    transition: transform 180ms ease;
+  }
+
+  .to-dark,
+  :global(:root[data-theme="light"]) .to-light {
+    display: none;
+  }
+
+  :global(:root[data-theme="light"]) .to-dark {
+    display: inline;
+  }
+
+  :global(:root[data-theme="light"]) .theme-toggle i::after {
+    transform: translateX(17px);
+  }
+
+  .menu-toggle {
+    display: none;
+  }
+
+  @media (max-width: 900px) {
+    .site-header {
+      grid-template-columns: 1fr auto;
+    }
+
+    .menu-toggle {
+      display: block;
+      cursor: pointer;
+      border: 0;
+      background: transparent;
+      font: 500 0.7rem var(--font-mono);
+    }
+
+    nav {
+      position: absolute;
+      top: 76px;
+      right: 0;
+      left: 0;
+      display: none;
+      flex-direction: column;
+      gap: 0;
+      border-bottom: 1px solid var(--rule);
+      background: var(--paper);
+    }
+
+    nav.nav-open {
+      display: flex;
+    }
+
+    nav a {
+      padding: 1rem 5vw;
+      border-top: 1px solid color-mix(in srgb, var(--ink) 25%, transparent);
+    }
+
+    .header-ticket {
+      display: none;
+    }
+
+    .header-actions {
+      grid-column: 2;
+      grid-row: 1;
+      margin-right: 4.2rem;
+    }
+
+    .menu-toggle {
+      position: absolute;
+      right: 4vw;
+    }
+  }
+
+  @media (max-width: 600px) {
+    .theme-toggle span {
+      display: none !important;
+    }
+
+    .header-actions {
+      margin-right: 3.2rem;
+    }
+  }
+</style>

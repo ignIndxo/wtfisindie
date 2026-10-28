@@ -1,0 +1,137 @@
+---
+import { site, tickerItems } from "../config/site";
+import HeroVisual from "./HeroVisual.astro";
+import Ticker from "./Ticker.astro";
+---
+
+<section class="hero">
+  <Ticker items={tickerItems} />
+
+  <div class="hero-grid">
+    <div class="hero-copy">
+      <p class="issue-mark">{site.city.toUpperCase()} / JESTERS NIGHTCLUB</p>
+      <p class="eyebrow">SOUTHAMPTON'S ONLY INDIE NIGHT</p>
+      <h1 class="display-heading">
+        EVERY<br />
+        <span class="outline">THURSDAY</span> NIGHT
+      </h1>
+      <p class="hero-intro">
+        Indie anthems and the songs you know every word to. Thursdays at Jesters, 10pm till 2am.
+      </p>
+      <div class="hero-actions">
+        <a class="button button-dark" href="#events">NEXT NIGHT <b>↗</b></a>
+        <a class="text-link" href="#zine">READ THE ZINE →</a>
+      </div>
+    </div>
+    <HeroVisual />
+  </div>
+
+  <p class="scroll-note">SCROLL FOR THE GOOD STUFF ↓</p>
+</section>
+
+<style>
+  .hero {
+    position: relative;
+    min-height: calc(100vh - 76px);
+    overflow: hidden;
+    border-bottom: 1px solid var(--rule);
+    background:
+      linear-gradient(
+        90deg,
+        transparent 49.9%,
+        color-mix(in srgb, var(--rule) 35%, transparent) 50%,
+        transparent 50.1%
+      ),
+      var(--paper);
+  }
+
+  .hero-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.05fr) minmax(390px, 0.95fr);
+    align-items: center;
+    min-height: calc(100vh - 132px);
+    padding: clamp(3rem, 7vw, 7.5rem) 6vw;
+  }
+
+  .issue-mark {
+    width: max-content;
+    margin-bottom: 2.2rem;
+    padding: 0.35rem 0.55rem;
+    background: var(--ink);
+    color: var(--paper);
+    font: 500 0.58rem var(--font-mono);
+    letter-spacing: 0.08em;
+    transform: rotate(-1deg);
+  }
+
+  h1 {
+    margin-bottom: 1.8rem;
+    /* THURSDAY is ~5.5em wide, so size from the column width to avoid overflow. */
+    font-size: clamp(3.5rem, 7.6vw, 8rem);
+    text-shadow: 3px 0 0 color-mix(in srgb, var(--pink) 50%, transparent);
+  }
+
+  h1 span {
+    display: inline-block;
+    transform: rotate(-2deg);
+  }
+
+  .hero-intro {
+    max-width: 510px;
+    font-size: clamp(1rem, 1.5vw, 1.3rem);
+    line-height: 1.5;
+  }
+
+  .hero-actions {
+    display: flex;
+    align-items: center;
+    gap: 1.8rem;
+    margin-top: 2rem;
+  }
+
+  .scroll-note {
+    position: absolute;
+    bottom: 1.5rem;
+    left: 6vw;
+    font: 0.62rem var(--font-mono);
+  }
+
+  @media (max-width: 900px) {
+    /* The centre rule only makes sense beside the two-column layout. */
+    .hero {
+      background: var(--paper);
+    }
+
+    .hero-grid {
+      grid-template-columns: 1fr;
+      gap: 5rem;
+      padding-top: 5rem;
+      padding-bottom: 7rem;
+    }
+
+    h1 {
+      font-size: clamp(3.5rem, 13vw, 8rem);
+    }
+
+    .scroll-note {
+      display: none;
+    }
+  }
+
+  @media (max-width: 600px) {
+    .hero-grid {
+      padding-right: 5vw;
+      padding-left: 5vw;
+    }
+
+    h1 {
+      font-size: clamp(3rem, 14.5vw, 5.5rem);
+    }
+
+    .hero-actions {
+      align-items: flex-start;
+      flex-direction: column;
+      gap: 1.2rem;
+    }
+  }
+</style>
