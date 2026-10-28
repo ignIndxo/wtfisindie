@@ -9,14 +9,14 @@ import Ticker from "./Ticker.astro";
 
   <div class="hero-grid">
     <div class="hero-copy">
-      <p class="issue-mark">{site.city.toUpperCase()} / EVERY THURSDAY</p>
+      <p class="issue-mark">{site.city.toUpperCase()} / JESTERS NIGHTCLUB</p>
       <p class="eyebrow">SOUTHAMPTON'S ONLY INDIE NIGHT</p>
       <h1 class="display-heading">
-        MUSIC FOR<br />
-        <span class="outline">MESSY</span> PEOPLE
+        EVERY<br />
+        <span class="outline">THURSDAY</span> NIGHT
       </h1>
       <p class="hero-intro">
-        A Thursday night at Jesters for the bands, the b-sides, and everyone still dancing at 2am.
+        Indie anthems and the songs you know every word to. Thursdays at Jesters, 10pm till 2am.
       </p>
       <div class="hero-actions">
         <a class="button button-dark" href="#events">NEXT NIGHT <b>↗</b></a>
@@ -66,7 +66,8 @@ import Ticker from "./Ticker.astro";
 
   h1 {
     margin-bottom: 1.8rem;
-    font-size: clamp(4rem, 9.2vw, 9.2rem);
+    /* THURSDAY is ~5.5em wide, so size from the column width to avoid overflow. */
+    font-size: clamp(3.5rem, 7.6vw, 8rem);
     text-shadow: 3px 0 0 color-mix(in srgb, var(--pink) 50%, transparent);
   }
 
@@ -108,6 +109,10 @@ import Ticker from "./Ticker.astro";
       padding-bottom: 7rem;
     }
 
+    h1 {
+      font-size: clamp(3.5rem, 13vw, 8rem);
+    }
+
     .scroll-note {
       display: none;
     }
@@ -120,7 +125,7 @@ import Ticker from "./Ticker.astro";
     }
 
     h1 {
-      font-size: clamp(3.3rem, 17vw, 5.5rem);
+      font-size: clamp(3rem, 14.5vw, 5.5rem);
     }
 
     .hero-actions {
