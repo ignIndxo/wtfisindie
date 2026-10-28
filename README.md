@@ -17,7 +17,7 @@ introduced later, build output goes to `dist/` (already git-ignored).
 
 ## Font
 
-The page uses **Sue Ellen Francisco** (italic, a free stand-in for Oh My Baby) from Google Fonts, loaded in `index.html`.
+The page uses **NIGHTJUMP** (italic), self-hosted from `assets/fonts/NIGHTJUMP.ttf`.
 
 ## Local preview
 

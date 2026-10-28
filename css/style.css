@@ -1,7 +1,14 @@
+@font-face {
+  font-family: "NIGHTJUMP";
+  src: url("../assets/fonts/NIGHTJUMP.ttf") format("truetype");
+  font-weight: normal;
+  font-display: swap;
+}
+
 :root {
   --bg: #000;
   --fg: #fff;
-  --font-display: "Sue Ellen Francisco", "Brush Script MT", cursive;
+  --font-display: "NIGHTJUMP", "Brush Script MT", cursive;
 }
 
 *, *::before, *::after { box-sizing: border-box; }
@@ -31,13 +38,11 @@ h1 {
   font-size: clamp(2.5rem, 12vw, 8rem);
   font-weight: normal;
   line-height: 1.1;
-  -webkit-text-stroke: 0.02em currentColor;
 }
 
 .tickets {
   color: inherit;
   font-size: clamp(1.5rem, 5vw, 2.5rem);
-  -webkit-text-stroke: 0.02em currentColor;
   text-decoration: underline;
   text-underline-offset: 0.2em;
 }
