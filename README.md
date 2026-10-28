@@ -1,26 +1,29 @@
 # WTF is Indie?
 
-Static website for wtfisindie. Currently a "coming soon" holding page.
+Website for WTF is Indie?, Southampton's indie night. Built with
+[Astro](https://astro.build) (static output) and Tailwind CSS 4.
+
+## Commands
+
+Requires Node 24 (see `.nvmrc`).
+
+| Command           | Action                                  |
+| ----------------- | --------------------------------------- |
+| `npm install`     | Install dependencies                    |
+| `npm run dev`     | Start the dev server at `localhost:4321` |
+| `npm run build`   | Build the static site to `dist/`        |
+| `npm run preview` | Preview the built site locally          |
 
 ## Structure
 
 ```
-index.html        page entry point
-css/style.css     styles
-js/main.js        scripts
-assets/fonts/     self-hosted fonts
-assets/images/    images
+public/            copied to the build as-is (fonts, CNAME)
+src/layouts/       page layouts
+src/pages/         routes
+src/styles/        global CSS and design tokens
 ```
-
-No build step yet; the repo root is served as-is. If a bundler/framework is
-introduced later, build output goes to `dist/` (already git-ignored).
 
 ## Font
 
-The page uses **NIGHTJUMP** (italic), self-hosted from `assets/fonts/NIGHTJUMP.woff2` (TTF as fallback).
-
-## Local preview
-
-    python -m http.server 8000
-
-then open http://localhost:8000.
+NIGHTJUMP (italic), self-hosted from `public/fonts/` as WOFF2 with a TTF
+fallback.
