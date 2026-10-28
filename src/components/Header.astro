@@ -12,6 +12,11 @@ import Logo from "./Logo.astro";
     {nav.map((item) => <a href={item.href}>{item.label}</a>)}
   </nav>
   <div class="header-actions">
+    <button class="theme-toggle" type="button" aria-label="Switch to light mode" aria-pressed="false">
+      <span class="to-light" aria-hidden="true">LIGHT</span>
+      <span class="to-dark" aria-hidden="true">DARK</span>
+      <i aria-hidden="true"></i>
+    </button>
     <a class="header-ticket" href={site.fatsomaUrl} target="_blank" rel="noopener noreferrer">
       GET IN →
     </a>
@@ -28,6 +33,25 @@ import Logo from "./Logo.astro";
     toggle?.setAttribute("aria-expanded", String(open));
     if (toggle) toggle.textContent = open ? "CLOSE" : "MENU";
   };
+
+  const themeToggle = header?.querySelector<HTMLButtonElement>(".theme-toggle");
+  const root = document.documentElement;
+
+  const syncTheme = () => {
+    const light = root.dataset.theme === "light";
+    themeToggle?.setAttribute("aria-pressed", String(light));
+    themeToggle?.setAttribute("aria-label", `Switch to ${light ? "dark" : "light"} mode`);
+  };
+
+  themeToggle?.addEventListener("click", () => {
+    const next = root.dataset.theme === "light" ? "dark" : "light";
+    root.dataset.theme = next;
+    try {
+      localStorage.setItem("wtf-theme", next);
+    } catch {}
+    syncTheme();
+  });
+  syncTheme();
 
   toggle?.addEventListener("click", () => setOpen(!nav?.classList.contains("nav-open")));
   nav?.addEventListener("click", (event) => {
@@ -99,6 +123,51 @@ import Logo from "./Logo.astro";
     transform: rotate(-1deg);
   }
 
+  .theme-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+    cursor: pointer;
+    border: 0;
+    padding: 0.4rem;
+    background: transparent;
+    font: 500 0.6rem var(--font-mono);
+    letter-spacing: 0.08em;
+  }
+
+  .theme-toggle i {
+    position: relative;
+    display: block;
+    width: 30px;
+    height: 13px;
+    border: 1px solid var(--ink);
+    background: var(--surface);
+  }
+
+  .theme-toggle i::after {
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 7px;
+    height: 7px;
+    content: "";
+    background: var(--pink);
+    transition: transform 180ms ease;
+  }
+
+  .to-dark,
+  :global(:root[data-theme="light"]) .to-light {
+    display: none;
+  }
+
+  :global(:root[data-theme="light"]) .to-dark {
+    display: inline;
+  }
+
+  :global(:root[data-theme="light"]) .theme-toggle i::after {
+    transform: translateX(17px);
+  }
+
   .menu-toggle {
     display: none;
   }
@@ -139,6 +208,27 @@ import Logo from "./Logo.astro";
 
     .header-ticket {
       display: none;
+    }
+
+    .header-actions {
+      grid-column: 2;
+      grid-row: 1;
+      margin-right: 4.2rem;
+    }
+
+    .menu-toggle {
+      position: absolute;
+      right: 4vw;
+    }
+  }
+
+  @media (max-width: 600px) {
+    .theme-toggle span {
+      display: none !important;
+    }
+
+    .header-actions {
+      margin-right: 3.2rem;
     }
   }
 </style>

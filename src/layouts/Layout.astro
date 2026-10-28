@@ -19,6 +19,14 @@ const { title, description = "WTF is Indie? Southampton's indie night." } = Astr
     <meta name="description" content={description} />
     <meta name="theme-color" content="#000000" />
     <link rel="preload" href="/fonts/NIGHTJUMP.woff2" as="font" type="font/woff2" crossorigin />
+    <script is:inline>
+      // Apply the saved theme before first paint to avoid a flash.
+      try {
+        if (localStorage.getItem("wtf-theme") === "light") {
+          document.documentElement.dataset.theme = "light";
+        }
+      } catch {}
+    </script>
     <title>{title}</title>
   </head>
   <body id="top">
