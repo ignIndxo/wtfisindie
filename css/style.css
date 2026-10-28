@@ -1,6 +1,7 @@
 @font-face {
   font-family: "NIGHTJUMP";
-  src: url("../assets/fonts/NIGHTJUMP.ttf") format("truetype");
+  src: url("../assets/fonts/NIGHTJUMP.woff2") format("woff2"),
+       url("../assets/fonts/NIGHTJUMP.ttf") format("truetype");
   font-weight: normal;
   font-display: swap;
 }
