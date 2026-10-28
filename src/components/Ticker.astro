@@ -4,18 +4,29 @@ interface Props {
 }
 
 const { items } = Astro.props;
+
+// Each half repeats the items enough times to be wider than any realistic
+// screen (about 700px per copy, so 12 copies covers 8K displays). The track
+// scrolls by exactly one half, so the loop is seamless and never shows a gap.
+const COPIES_PER_HALF = 12;
+const halves = [0, 1];
+const copies = Array.from({ length: COPIES_PER_HALF }, (_, i) => i);
 ---
 
 <div class="ticker" role="region" aria-label="Latest news">
-  <div class="track">
+  <div class="track" style={`--copies: ${COPIES_PER_HALF}`}>
     {
-      [0, 1].map((copy) => (
-        <div class="group" aria-hidden={copy === 1 ? "true" : undefined}>
-          {items.map((item) => (
-            <>
-              <span>{item}</span>
-              <i aria-hidden="true">+</i>
-            </>
+      halves.map((half) => (
+        <div class="half">
+          {copies.map((copy) => (
+            <div class="group" aria-hidden={half === 0 && copy === 0 ? undefined : "true"}>
+              {items.map((item) => (
+                <>
+                  <span>{item}</span>
+                  <i aria-hidden="true">+</i>
+                </>
+              ))}
+            </div>
           ))}
         </div>
       ))
@@ -38,11 +49,15 @@ const { items } = Astro.props;
     display: flex;
     width: max-content;
     padding: 9px 0;
-    animation: ticker 24s linear infinite;
+    /* Constant speed however many copies are in each half. */
+    animation: ticker calc(var(--copies) * 24s) linear infinite;
   }
 
-  /* Each copy carries its own trailing gap so the two halves are equal
-     and the -50% loop is seamless. */
+  .half {
+    display: flex;
+  }
+
+  /* Each copy carries its own trailing gap so the two halves are equal. */
   .group {
     display: flex;
     gap: 2rem;
