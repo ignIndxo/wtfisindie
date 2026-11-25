@@ -32,6 +32,21 @@ const events = getEvents();
   </div>
 </section>
 
+<script>
+  import { removeFinished } from "../lib/expiry";
+
+  // The page is only rebuilt periodically, so also drop finished nights in the
+  // browser: on load, every minute, and when a background tab is reopened.
+  const sweep = () =>
+    removeFinished(document.querySelectorAll<HTMLElement>(".event-card[data-end]"), Date.now());
+
+  sweep();
+  setInterval(sweep, 60_000);
+  document.addEventListener("visibilitychange", () => {
+    if (!document.hidden) sweep();
+  });
+</script>
+
 <style>
   .event-list {
     border-top: 1px solid var(--rule);

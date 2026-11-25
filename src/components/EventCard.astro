@@ -16,7 +16,7 @@ const times = `${formatLondonTime(start)} – ${formatLondonTime(new Date(event.
 const details = [weekday, times].join(" · ");
 ---
 
-<article class="event-card">
+<article class="event-card" data-end={event.end}>
   <div class="event-date">
     <strong>{day}</strong>
     <span>{month}</span>
