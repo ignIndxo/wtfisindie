@@ -1,0 +1,26 @@
+---
+import { getEvents } from "../lib/events";
+import EventCard from "./EventCard.astro";
+import SectionHeading from "./SectionHeading.astro";
+
+const events = getEvents();
+---
+
+<section class="events section-shell" id="events">
+  <SectionHeading eyebrow="DIARY DATES">
+    UPCOMING<br /><em>NIGHTS</em>
+    <Fragment slot="note">
+      NO DRESS CODE.<br />NO GUEST LIST DRAMA.<br />JUST TURN UP.
+    </Fragment>
+  </SectionHeading>
+
+  <div class="event-list">
+    {events.map((event) => <EventCard event={event} />)}
+  </div>
+</section>
+
+<style>
+  .event-list {
+    border-top: 1px solid var(--rule);
+  }
+</style>

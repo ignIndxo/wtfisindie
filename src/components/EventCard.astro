@@ -1,0 +1,129 @@
+---
+import type { WtfEvent } from "../lib/events";
+import { formatLondonDate, formatLondonTime } from "../lib/time";
+
+interface Props {
+  event: WtfEvent;
+  sticker?: string;
+}
+
+const { event, sticker } = Astro.props;
+const start = new Date(event.start);
+const { day, month, weekday } = formatLondonDate(start);
+const times = `${formatLondonTime(start)} – ${formatLondonTime(new Date(event.end))}`;
+const details = [weekday, times, event.price].filter(Boolean).join(" · ");
+---
+
+<article class="event-card">
+  <div class="event-date">
+    <strong>{day}</strong>
+    <span>{month}</span>
+  </div>
+  <div class="event-info">
+    {sticker && <span class="mini-sticker">{sticker}</span>}
+    <h3 class="display-heading">
+      <a href={event.url} target="_blank" rel="noopener noreferrer">{event.title}</a>
+    </h3>
+    <p class="venue">{`${event.venue}, ${event.city}`.toUpperCase()}</p>
+    <p>{details}</p>
+  </div>
+  <span class="round-link" aria-hidden="true">↗</span>
+</article>
+
+<style>
+  .event-card {
+    position: relative;
+    display: grid;
+    grid-template-columns: 125px 1fr auto;
+    gap: clamp(1rem, 3vw, 3rem);
+    align-items: center;
+    padding: 1.8rem 1rem;
+    border-bottom: 1px solid var(--rule);
+    transition:
+      background 180ms ease,
+      padding 180ms ease;
+  }
+
+  .event-card:hover {
+    padding-right: 1.5rem;
+    padding-left: 1.5rem;
+    background: color-mix(in srgb, var(--pink) 16%, var(--paper));
+  }
+
+  .event-date {
+    display: flex;
+    align-items: flex-end;
+    gap: 8px;
+  }
+
+  .event-date strong {
+    font: 4.2rem/0.75 var(--font-heading);
+    letter-spacing: -0.08em;
+  }
+
+  .event-date span {
+    font: 500 0.75rem var(--font-mono);
+  }
+
+  .mini-sticker {
+    display: inline-block;
+    padding: 3px 7px;
+    background: var(--pink);
+    color: #f8f4eb;
+    font: 500 0.55rem var(--font-mono);
+  }
+
+  h3 {
+    margin: 0.3rem 0 0.4rem;
+    font-size: clamp(1.3rem, 2.8vw, 2.6rem);
+    line-height: 0.95;
+    overflow-wrap: anywhere;
+  }
+
+  /* One link per card: the title link stretches over the whole card. */
+  h3 a::after {
+    position: absolute;
+    inset: 0;
+    content: "";
+  }
+
+  .event-info p {
+    margin: 0.3rem 0 0;
+    font: 0.65rem/1.4 var(--font-mono);
+  }
+
+  .event-info .venue {
+    font-weight: 500;
+  }
+
+  .round-link {
+    display: grid;
+    width: 52px;
+    aspect-ratio: 1;
+    place-items: center;
+    border: 1px solid var(--ink);
+    font-size: 1.3rem;
+    transition:
+      background 150ms ease,
+      transform 150ms ease;
+  }
+
+  .event-card:hover .round-link {
+    background: var(--pink);
+    transform: rotate(12deg);
+  }
+
+  @media (max-width: 600px) {
+    .event-card {
+      grid-template-columns: 80px 1fr;
+    }
+
+    .event-date strong {
+      font-size: 3.2rem;
+    }
+
+    .round-link {
+      display: none;
+    }
+  }
+</style>
