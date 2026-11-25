@@ -13,8 +13,6 @@ export interface WtfEvent {
   end: string;
   venue: string;
   city: string;
-  /** Display price, e.g. "£5". */
-  price?: string;
   image?: string;
   /** The event's own Fatsoma page. */
   url: string;
@@ -44,7 +42,6 @@ function placeholderEvents(now: Date): WtfEvent[] {
         end: londonToUtc(y, m, d + 1, 2).toISOString(),
         venue: "Clowns Wine Bar and Jesters Nightclub",
         city: site.city,
-        price: "£5",
         url: site.fatsomaUrl,
       };
     })
