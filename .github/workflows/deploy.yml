@@ -1,0 +1,61 @@
+name: Publish site
+
+# Fetches the latest Fatsoma events, builds the site and publishes it to GitHub
+# Pages. If any step fails, the site that is already live stays as it is.
+on:
+  push:
+    branches: [main]
+  schedule:
+    # Daily at 06:17 UTC, after club nights end. Deliberately not on the hour,
+    # when GitHub's scheduled runs are most likely to be delayed or dropped.
+    - cron: "17 6 * * *"
+  workflow_dispatch:
+    inputs:
+      allow_empty:
+        description: Publish even if Fatsoma lists no events
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+# One publish at a time, without cutting off one that is part-way through.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: .nvmrc
+          package-manager-cache: false # install fresh for what gets published
+      - run: npm ci
+      - run: npm test
+      - name: Fetch events from Fatsoma
+        run: npm run scrape -- ${{ inputs.allow_empty && '--allow-empty' || '' }}
+      - run: npm run build
+      - uses: actions/upload-pages-artifact@v5
+        with:
+          path: dist
+
+  deploy:
+    needs: build
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v5
