@@ -7,7 +7,8 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "test": "vitest run"
+    "test": "vitest run",
+    "scrape": "node scripts/scrape-fatsoma.ts"
   },
   "dependencies": {
     "@fontsource-variable/space-grotesk": "5.3.0",

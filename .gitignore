@@ -13,3 +13,6 @@ Y2K Zine Inspired Website*/
 
 # Astro
 .astro/
+
+# Events fetched from Fatsoma (fetched fresh each time, never committed)
+src/data/

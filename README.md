@@ -14,6 +14,7 @@ Requires Node 24 (see `.nvmrc`).
 | `npm run build`   | Build the static site to `dist/`        |
 | `npm run preview` | Preview the built site locally          |
 | `npm test`        | Run the tests                           |
+| `npm run scrape`  | Fetch events from Fatsoma               |
 
 ## Structure
 
