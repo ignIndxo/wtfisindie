@@ -13,6 +13,7 @@ Requires Node 24 (see `.nvmrc`).
 | `npm run dev`     | Start the dev server at `localhost:4321` |
 | `npm run build`   | Build the static site to `dist/`        |
 | `npm run preview` | Preview the built site locally          |
+| `npm test`        | Run the tests                           |
 
 ## Structure
 
