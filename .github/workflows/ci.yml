@@ -31,3 +31,20 @@ jobs:
       - name: Use sample events
         run: mkdir -p src/data && cp scripts/__fixtures__/events.json src/data/events.json
       - run: npm run build
+
+  fatsoma:
+    name: Fatsoma fetch from GitHub
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    # A warning only: Fatsoma being unavailable shouldn't fail the whole run.
+    continue-on-error: true
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - run: npm ci
+      - run: npm run scrape
