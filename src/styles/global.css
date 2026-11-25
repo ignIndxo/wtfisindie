@@ -183,3 +183,9 @@
     transform-origin: left;
   }
 }
+
+@layer components {
+  .section-shell {
+    padding: clamp(5rem, 10vw, 9rem) 6vw;
+  }
+}
