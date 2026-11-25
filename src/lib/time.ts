@@ -15,7 +15,6 @@ function londonOffsetMinutes(at: Date): number {
 
 /**
  * Convert a London wall-clock time (month is 1-12) to the real UTC instant.
- * Fatsoma labels London local times as UTC, so scraped times go through this.
  */
 export function londonToUtc(
   year: number,
