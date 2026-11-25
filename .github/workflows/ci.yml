@@ -1,0 +1,33 @@
+name: CI
+
+# Checks every pull request into the live and build branches.
+on:
+  pull_request:
+    branches: [main, redesign]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test-and-build:
+    name: Tests and build
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - run: npm ci
+      - run: npm test
+      # Build with made-up events, so a Fatsoma outage can't fail a code change.
+      - name: Use sample events
+        run: mkdir -p src/data && cp scripts/__fixtures__/events.json src/data/events.json
+      - run: npm run build
