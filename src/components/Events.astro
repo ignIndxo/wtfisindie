@@ -1,4 +1,5 @@
 ---
+import { site } from "../config/site";
 import { getEvents } from "../lib/events";
 import EventCard from "./EventCard.astro";
 import SectionHeading from "./SectionHeading.astro";
@@ -16,11 +17,49 @@ const events = getEvents();
 
   <div class="event-list">
     {events.map((event) => <EventCard event={event} />)}
+    {/* Shown only when it is the only thing in the list. */}
+    <div class="no-events">
+      <h3 class="display-heading">NEXT NIGHT TO BE ANNOUNCED</h3>
+      {/* The explicit {" "}s keep the spaces around the links. */}
+      <p>
+        Follow{" "}
+        <a href={site.instagramUrl} target="_blank" rel="noopener noreferrer">Instagram</a>{" "}
+        or check{" "}
+        <a href={site.fatsomaUrl} target="_blank" rel="noopener noreferrer">Fatsoma</a>{" "}
+        for new dates.
+      </p>
+    </div>
   </div>
 </section>
 
 <style>
   .event-list {
     border-top: 1px solid var(--rule);
+  }
+
+  .no-events {
+    display: none;
+    padding: 2.5rem 1rem;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .no-events:only-child {
+    display: block;
+  }
+
+  .no-events h3 {
+    margin: 0 0 0.8rem;
+    font-size: clamp(1.3rem, 2.8vw, 2.6rem);
+    line-height: 0.95;
+  }
+
+  .no-events p {
+    margin: 0;
+    font: 0.75rem/1.6 var(--font-mono);
+  }
+
+  .no-events a {
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
   }
 </style>
