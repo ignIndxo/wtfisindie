@@ -11,7 +11,9 @@ const { event, sticker } = Astro.props;
 const start = new Date(event.start);
 const { day, month, weekday } = formatLondonDate(start);
 const times = `${formatLondonTime(start)} – ${formatLondonTime(new Date(event.end))}`;
-const details = [weekday, times, event.price].filter(Boolean).join(" · ");
+// No price: Fatsoma's event data leaves out the booking fee, so showing it
+// would understate the cost. Ticket prices are on the linked Fatsoma page.
+const details = [weekday, times].join(" · ");
 ---
 
 <article class="event-card">

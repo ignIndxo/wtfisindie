@@ -5,7 +5,9 @@ Website for WTF is Indie?, Southampton's indie night. Built with
 
 ## Commands
 
-Requires Node 24 (see `.nvmrc`).
+Requires Node 24 (see `.nvmrc`). On a fresh copy, run `npm run scrape` before
+`npm run dev` or `npm run build`: the site needs the fetched events. Run it again
+whenever you want the latest ones.
 
 | Command           | Action                                  |
 | ----------------- | --------------------------------------- |
@@ -13,6 +15,8 @@ Requires Node 24 (see `.nvmrc`).
 | `npm run dev`     | Start the dev server at `localhost:4321` |
 | `npm run build`   | Build the static site to `dist/`        |
 | `npm run preview` | Preview the built site locally          |
+| `npm test`        | Run the tests                           |
+| `npm run scrape`  | Fetch events from Fatsoma               |
 
 ## Structure
 

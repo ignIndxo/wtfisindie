@@ -15,15 +15,5 @@ export const nav = [
   { label: "ABOUT", href: "#about" },
 ] as const;
 
-// Placeholders until the Fatsoma scraper supplies the next event name and
-// the zine content supplies the latest issue number.
-const ticker = {
-  nextEventName: "CATFISH SPECIAL",
-  latestIssue: 4,
-};
-
-export const tickerItems = [
-  `${ticker.nextEventName} TICKETS OUT`,
-  "BEST CLUB NIGHT IN SOUTHAMPTON",
-  `ISSUE ${String(ticker.latestIssue).padStart(3, "0")} OUT NOW`,
-] as const;
+// Placeholder until the zine content supplies the latest issue number.
+export const latestIssue = 4;
