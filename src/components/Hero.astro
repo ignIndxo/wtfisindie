@@ -1,7 +1,11 @@
 ---
-import { site, tickerItems } from "../config/site";
+import { latestIssue, site } from "../config/site";
+import { getEvents } from "../lib/events";
+import { buildTickerItems } from "../lib/ticker";
 import HeroVisual from "./HeroVisual.astro";
 import Ticker from "./Ticker.astro";
+
+const tickerItems = buildTickerItems(getEvents()[0]?.title, latestIssue);
 ---
 
 <section class="hero">
