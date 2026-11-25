@@ -4,10 +4,9 @@ import { formatLondonDate, formatLondonTime } from "../lib/time";
 
 interface Props {
   event: WtfEvent;
-  sticker?: string;
 }
 
-const { event, sticker } = Astro.props;
+const { event } = Astro.props;
 const start = new Date(event.start);
 const { day, month, weekday } = formatLondonDate(start);
 const times = `${formatLondonTime(start)} – ${formatLondonTime(new Date(event.end))}`;
@@ -16,13 +15,13 @@ const times = `${formatLondonTime(start)} – ${formatLondonTime(new Date(event.
 const details = [weekday, times].join(" · ");
 ---
 
-<article class="event-card">
+<article class="event-card" data-end={event.end}>
   <div class="event-date">
     <strong>{day}</strong>
     <span>{month}</span>
   </div>
   <div class="event-info">
-    {sticker && <span class="mini-sticker">{sticker}</span>}
+    <span class="mini-sticker">NEXT UP</span>
     <h3 class="display-heading">
       <a href={event.url} target="_blank" rel="noopener noreferrer">{event.title}</a>
     </h3>
@@ -68,11 +67,17 @@ const details = [weekday, times].join(" · ");
   }
 
   .mini-sticker {
-    display: inline-block;
+    display: none;
     padding: 3px 7px;
     background: var(--pink);
     color: #f8f4eb;
     font: 500 0.55rem var(--font-mono);
+  }
+
+  /* Only the first card is next up. In CSS, so it moves along when a finished
+     card is removed from an open page. */
+  .event-card:first-child .mini-sticker {
+    display: inline-block;
   }
 
   h3 {
